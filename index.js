@@ -10,6 +10,9 @@ const autorRoutes = require('./routes/autor.routes');
 const imagenRoutes = require('./routes/imagen.routes');
 const videoRoutes = require('./routes/video.routes');
 const objetoRoutes = require('./routes/objeto.routes');
+const usuarioRoutes = require('./routes/usuario.routes');
+const favoritoRoutes = require('./routes/favorito.routes');
+
 
 require('dotenv').config();
 
@@ -27,6 +30,8 @@ app.use('/api', autorRoutes);
 app.use('/api', imagenRoutes);
 app.use('/api', videoRoutes);
 app.use('/api', objetoRoutes);
+app.use('/api', usuarioRoutes);
+app.use('/', favoritoRoutes);
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;

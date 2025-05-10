@@ -1,6 +1,6 @@
 class Objeto {
     constructor(id, nombre, descripcion, fecha_creacion, valor_historico, nro_visitas, ruta_preview,
-                epoca_id, ubicacion_actual_id, estado_conservacion_id, procedencia_id, categoria_id) {
+                epoca_id, ubicacion_actual_id, estado_conservacion_id, procedencia_id, categoria_id, autor_id) {
       this.id = id;
       this.nombre = nombre;
       this.descripcion = descripcion;
@@ -13,6 +13,7 @@ class Objeto {
       this.estado_conservacion_id = estado_conservacion_id;
       this.procedencia_id = procedencia_id;
       this.categoria_id = categoria_id;
+      this.autor_id = autor_id;
     }
   }
   

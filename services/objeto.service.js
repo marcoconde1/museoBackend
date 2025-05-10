@@ -9,7 +9,7 @@ async function getAllObjetos() {
         row.id, row.nombre, row.descripcion, row.fecha_creacion,
         row.valor_historico, row.nro_visitas, row.ruta_preview,
         row.EPOCA_id, row.UBICACION_ACTUAL_id, row.ESTADO_CONSERVACION_id,
-        row.PROCEDENCIA_id, row.CATEGORIA_id
+        row.PROCEDENCIA_id, row.CATEGORIA_id, row.AUTOR_id
       )));
     });
   });
@@ -19,18 +19,18 @@ async function createObjeto(data) {
   const {
     id, nombre, descripcion, fecha_creacion, valor_historico, nro_visitas,
     ruta_preview, epoca_id, ubicacion_actual_id, estado_conservacion_id,
-    procedencia_id, categoria_id
+    procedencia_id, categoria_id, autor_id
   } = data;
 
   return new Promise((resolve, reject) => {
     const query = `INSERT INTO OBJETO
       (id, nombre, descripcion, fecha_creacion, valor_historico, nro_visitas, ruta_preview,
-      EPOCA_id, UBICACION_ACTUAL_id, ESTADO_CONSERVACION_id, PROCEDENCIA_id, CATEGORIA_id)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      EPOCA_id, UBICACION_ACTUAL_id, ESTADO_CONSERVACION_id, PROCEDENCIA_id, CATEGORIA_id, AUTOR_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const values = [
       id, nombre, descripcion, fecha_creacion, valor_historico, nro_visitas, ruta_preview,
-      epoca_id, ubicacion_actual_id, estado_conservacion_id, procedencia_id, categoria_id
+      epoca_id, ubicacion_actual_id, estado_conservacion_id, procedencia_id, categoria_id, autor_id
     ];
 
     connection.query(query, values, (err, result) => {
@@ -63,7 +63,7 @@ async function getObjetoById(id) {
             row.id, row.nombre, row.descripcion, row.fecha_creacion,
             row.valor_historico, row.nro_visitas, row.ruta_preview,
             row.EPOCA_id, row.UBICACION_ACTUAL_id, row.ESTADO_CONSERVACION_id,
-            row.PROCEDENCIA_id, row.CATEGORIA_id
+            row.PROCEDENCIA_id, row.CATEGORIA_id, row.AUTOR_id
           ));
         }
       });

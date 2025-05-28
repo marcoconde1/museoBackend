@@ -70,10 +70,66 @@ async function getObjetoById(id) {
     });
   }
   
+async function updateObjeto(id, data) {
+return new Promise((resolve, reject) => {
+const {
+nombre,
+descripcion,
+fecha_creacion,
+valor_historico,
+nro_visitas,
+ruta_preview,
+epoca_id,
+ubicacion_actual_id,
+estado_conservacion_id,
+procedencia_id,
+categoria_id,
+autor_id
+} = data;
+const query = `
+  UPDATE OBJETO SET
+    nombre = ?,
+    descripcion = ?,
+    fecha_creacion = ?,
+    valor_historico = ?,
+    nro_visitas = ?,
+    ruta_preview = ?,
+    EPOCA_id = ?,
+    UBICACION_ACTUAL_id = ?,
+    ESTADO_CONSERVACION_id = ?,
+    REGION_id = ?,
+    CATEGORIA_id = ?,
+    AUTOR_id = ?
+  WHERE id = ?`;
+
+const values = [
+  nombre,
+  descripcion,
+  fecha_creacion,
+  valor_historico,
+  nro_visitas,
+  ruta_preview,
+  epoca_id,
+  ubicacion_actual_id,
+  estado_conservacion_id,
+  procedencia_id,
+  categoria_id,
+  autor_id,
+  id
+];
+
+connection.query(query, values, (err, result) => {
+  if (err) return reject(err);
+  resolve({ message: `Objeto con id ${id} actualizado.` });
+});
+});
+}
+
 
 module.exports = {
   getAllObjetos,
   createObjeto,
   deleteObjeto,
-  getObjetoById
+  getObjetoById,
+  updateObjeto
 };

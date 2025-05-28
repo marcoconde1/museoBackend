@@ -32,4 +32,25 @@ router.delete('/estados/:id', async (req, res) => {
   }
 });
 
+router.get('/estados/:id', async (req, res) => {
+  try {
+    const estado = await estadoService.getEstadoById(req.params.id);
+    if (!estado) {
+      return res.status(404).json({ message: 'Estado de conservación no encontrado' });
+    }
+    res.json(estado);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.put('/estados/:id', async (req, res) => {
+  try {
+    const result = await estadoService.updateEstado(req.params.id, req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

@@ -33,8 +33,33 @@ async function deleteCategoria(id) {
   });
 }
 
+async function getCategoriaById(id) {
+return new Promise((resolve, reject) => {
+connection.query('SELECT * FROM CATEGORIA WHERE id = ?', [id], (err, results) => {
+if (err) return reject(err);
+if (results.length === 0) return resolve(null);
+  const row = results[0];
+  resolve(new Categoria(row.id, row.categoria, row.descripcion));
+});
+});
+}
+
+// Actualizar categoría por ID
+async function updateCategoria(id, data) {
+return new Promise((resolve, reject) => {
+const { categoria, descripcion } = data;
+const query = 'UPDATE CATEGORIA SET categoria = ?, descripcion = ? WHERE id = ?';
+connection.query(query, [categoria, descripcion, id], (err, result) => {
+if (err) return reject(err);
+resolve({ message: `Categoría con ID ${id} actualizada.` });
+});
+});
+}
+
 module.exports = {
   getAllCategorias,
   createCategoria,
-  deleteCategoria
+  deleteCategoria,
+  getCategoriaById,
+  updateCategoria
 };

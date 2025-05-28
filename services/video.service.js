@@ -45,9 +45,22 @@ async function getVideosByObjetoId(objeto_id) {
     });
   });
 }
+
+async function updateVideoRuta(id, nuevaRuta) {
+  return new Promise((resolve, reject) => {
+    const query = 'UPDATE VIDEO SET ruta_video = ? WHERE id = ?';
+    connection.query(query, [nuevaRuta, id], (err, result) => {
+      if (err) return reject(err);
+      resolve({ message: `Video con id ${id} actualizado con nueva ruta.` });
+    });
+  });
+}
+
+
 module.exports = {
   getAllVideos,
   createVideo,
   deleteVideo,
-  getVideosByObjetoId
+  getVideosByObjetoId,
+  updateVideoRuta,
 };

@@ -45,4 +45,15 @@ router.get('/imagenes/:objeto_id', async (req, res) => {
     }
   });
   
+router.put('/imagenes/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { ruta_imagen } = req.body;
+    const result = await imagenService.updateImagenRuta(id, ruta_imagen);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
   module.exports = router;

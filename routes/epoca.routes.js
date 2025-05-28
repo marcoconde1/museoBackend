@@ -32,4 +32,26 @@ router.delete('/epocas/:id', async (req, res) => {
   }
 });
 
+// Obtener época por ID
+router.get('/epocas/:id', async (req, res) => {
+try {
+const epoca = await epocaService.getEpocaById(req.params.id);
+if (!epoca) {
+return res.status(404).json({ message: 'Época no encontrada' });
+}
+res.json(epoca);
+} catch (err) {
+res.status(500).json({ error: err.message });
+}
+});
+
+// Actualizar época por ID
+router.put('/epocas/:id', async (req, res) => {
+try {
+const result = await epocaService.updateEpoca(req.params.id, req.body);
+res.json(result);
+} catch (err) {
+res.status(500).json({ error: err.message });
+}
+});
 module.exports = router;

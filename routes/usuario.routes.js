@@ -46,4 +46,14 @@ router.delete('/usuarios/:id', async (req, res) => {
   }
 });
 
+router.put('/usuarios/:id', async (req, res) => {
+  try {
+    const result = await usuarioService.updateUsuario(req.params.id, req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 module.exports = router;

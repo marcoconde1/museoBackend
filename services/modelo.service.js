@@ -58,6 +58,17 @@ async function getModeloById(objetoId) {
       });
     });
   }
-  
 
-module.exports = { getAllModelos, createModelo, deleteModeloById, getModeloById };
+  
+  async function updateModeloRutas(objeto_id, ruta_modelo, ruta_fondo) {
+  return new Promise((resolve, reject) => {
+    const query = 'UPDATE MODELO SET ruta_modelo = ?, ruta_fondo = ? WHERE OBJETO_id = ?';
+    connection.query(query, [ruta_modelo, ruta_fondo, objeto_id], (err, result) => {
+      if (err) return reject(err);
+      resolve({ objeto_id, ruta_modelo, ruta_fondo });
+    });
+  });
+}
+
+
+module.exports = { getAllModelos, createModelo, deleteModeloById, getModeloById,  updateModeloRutas};

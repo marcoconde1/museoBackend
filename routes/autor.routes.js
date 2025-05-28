@@ -32,4 +32,27 @@ router.delete('/autores/:id', async (req, res) => {
   }
 });
 
+// Obtener autor por ID
+router.get('/autores/:id', async (req, res) => {
+  try {
+    const autor = await autorService.getAutorById(req.params.id);
+    if (!autor) {
+      return res.status(404).json({ message: 'Autor no encontrado' });
+    }
+    res.json(autor);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Actualizar autor
+router.put('/autores/:id', async (req, res) => {
+  try {
+    const result = await autorService.updateAutor(req.params.id, req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

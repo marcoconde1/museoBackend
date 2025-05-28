@@ -32,4 +32,23 @@ router.delete('/ubicaciones/:id', async (req, res) => {
   }
 });
 
+router.get('/ubicaciones/:id', async (req, res) => {
+  try {
+    const ubicacion = await ubicacionService.getUbicacionById(req.params.id);
+    if (!ubicacion) return res.status(404).json({ message: 'Ubicación no encontrada' });
+    res.json(ubicacion);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.put('/ubicaciones/:id', async (req, res) => {
+  try {
+    const result = await ubicacionService.updateUbicacion(req.params.id, req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

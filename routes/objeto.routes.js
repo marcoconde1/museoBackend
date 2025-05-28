@@ -44,6 +44,15 @@ router.get('/objetos/:id', async (req, res) => {
       res.status(500).json({ message: 'Error al obtener el objeto' });
     }
   });
+
+router.put('/objetos/:id', async (req, res) => {
+try {
+const result = await objetoService.updateObjeto(req.params.id, req.body);
+res.json(result);
+} catch (err) {
+res.status(500).json({ error: err.message });
+}
+});
   
 
 module.exports = router;

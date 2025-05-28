@@ -55,4 +55,16 @@ router.get('/modelos/:id', async (req, res) => {
     }
   });
 
+  router.put('/modelos/:objeto_id', async (req, res) => {
+  try {
+    const { objeto_id } = req.params;
+    const { ruta_modelo, ruta_fondo } = req.body;
+    const updated = await modeloService.updateModeloRutas(objeto_id, ruta_modelo, ruta_fondo);
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 module.exports = router;

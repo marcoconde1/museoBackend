@@ -46,4 +46,16 @@ router.get('/videos/:objeto_id', async (req, res) => {
     }
   });
 
+  router.put('/videos/:id/ruta', async (req, res) => {
+  try {
+    const { ruta_video } = req.body;
+    if (!ruta_video) return res.status(400).json({ error: 'Falta ruta_video en el cuerpo' });
+
+    const result = await videoService.updateVideoRuta(req.params.id, ruta_video);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

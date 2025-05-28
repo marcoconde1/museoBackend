@@ -52,9 +52,34 @@ async function deleteUsuario(id) {
   });
 }
 
+async function updateUsuario(id, data) {
+  return new Promise((resolve, reject) => {
+    const { nombre, apellido, usuario, contrasena, correo_electronico, admin } = data;
+    const query = `
+      UPDATE USUARIO SET
+        nombre = ?,
+        apellido = ?,
+        usuario = ?,
+        contrasena = ?,
+        correo_electronico = ?,
+        admin = ?
+      WHERE id = ?
+    `;
+    connection.query(
+      query,
+      [nombre, apellido, usuario, contrasena, correo_electronico, admin, id],
+      (err, result) => {
+        if (err) return reject(err);
+        resolve({ message: `Usuario con id ${id} actualizado.` });
+      }
+    );
+  });
+}
+
 module.exports = {
   getAllUsuarios,
   getUsuarioById,
   createUsuario,
-  deleteUsuario
+  deleteUsuario,
+  updateUsuario
 };

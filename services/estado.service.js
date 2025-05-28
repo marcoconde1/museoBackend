@@ -33,8 +33,36 @@ async function deleteEstado(id) {
   });
 }
 
+//Obtener id por estado 
+async function getEstadoById(id) {
+  return new Promise((resolve, reject) => {
+    connection.query('SELECT * FROM ESTADO_CONSERVACION WHERE id = ?', [id], (err, results) => {
+      if (err) return reject(err);
+      if (results.length === 0) return resolve(null);
+
+      const row = results[0];
+      resolve(new EstadoConservacion(row.id, row.estado));
+    });
+  });
+}
+
+//Actualizar estado 
+async function updateEstado(id, data) {
+  return new Promise((resolve, reject) => {
+    const { estado } = data;
+    const query = 'UPDATE ESTADO_CONSERVACION SET estado = ? WHERE id = ?';
+    connection.query(query, [estado, id], (err, result) => {
+      if (err) return reject(err);
+      resolve({ message: `Estado de conservación con ID ${id} actualizado.` });
+    });
+  });
+}
+
+
 module.exports = {
   getAllEstados,
   createEstado,
-  deleteEstado
+  deleteEstado,
+  getEstadoById,
+  updateEstado
 };

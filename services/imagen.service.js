@@ -50,9 +50,21 @@ async function getImagenesByObjetoId(objeto_id) {
     });
   }
 
+
+async function updateImagenRuta(id, nuevaRuta) {
+  return new Promise((resolve, reject) => {
+    const query = 'UPDATE IMAGEN SET ruta_imagen = ? WHERE id = ?';
+    connection.query(query, [nuevaRuta, id], (err, result) => {
+      if (err) return reject(err);
+      resolve({ id, nuevaRuta });
+    });
+  });
+}
+
 module.exports = {
   getAllImagenes,
   createImagen,
   deleteImagen,
-  getImagenesByObjetoId
+  getImagenesByObjetoId,
+  updateImagenRuta
 };

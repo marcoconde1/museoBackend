@@ -32,4 +32,26 @@ router.delete('/categorias/:id', async (req, res) => {
   }
 });
 
+// Obtener categoría por ID
+router.get('/categorias/:id', async (req, res) => {
+try {
+const categoria = await categoriaService.getCategoriaById(req.params.id);
+if (!categoria) {
+return res.status(404).json({ message: 'Categoría no encontrada' });
+}
+res.json(categoria);
+} catch (err) {
+res.status(500).json({ error: err.message });
+}
+});
+
+// Actualizar categoría
+router.put('/categorias/:id', async (req, res) => {
+try {
+const result = await categoriaService.updateCategoria(req.params.id, req.body);
+res.json(result);
+} catch (err) {
+res.status(500).json({ error: err.message });
+}
+});
 module.exports = router;

@@ -33,8 +33,35 @@ async function deleteUbicacion(id) {
   });
 }
 
+async function getUbicacionById(id) {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM UBICACION_ACTUAL WHERE id = ?';
+    connection.query(query, [id], (err, results) => {
+      if (err) return reject(err);
+      if (results.length === 0) return resolve(null);
+      const row = results[0];
+      resolve(new Ubicacion(row.id, row.pais, row.museo, row.contacto));
+    });
+  });
+}
+
+async function updateUbicacion(id, data) {
+  return new Promise((resolve, reject) => {
+    const { pais, museo, contacto } = data;
+    const query = 'UPDATE UBICACION_ACTUAL SET pais = ?, museo = ?, contacto = ? WHERE id = ?';
+    connection.query(query, [pais, museo, contacto, id], (err, result) => {
+      if (err) return reject(err);
+      resolve({ message: `Ubicación con id ${id} actualizada.` });
+    });
+  });
+}
+
+
+
 module.exports = {
   getAllUbicaciones,
   createUbicacion,
-  deleteUbicacion
+  deleteUbicacion,
+  getUbicacionById,
+  updateUbicacion
 };

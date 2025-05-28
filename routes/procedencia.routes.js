@@ -32,4 +32,23 @@ router.delete('/procedencias/:id', async (req, res) => {
   }
 });
 
+router.get('/procedencias/:id', async (req, res) => {
+try {
+const procedencia = await procedenciaService.getProcedenciaById(req.params.id);
+if (!procedencia) return res.status(404).json({ message: 'Procedencia no encontrada' });
+res.json(procedencia);
+} catch (err) {
+res.status(500).json({ error: err.message });
+}
+});
+
+router.put('/procedencias/:id', async (req, res) => {
+try {
+const result = await procedenciaService.updateProcedencia(req.params.id, req.body);
+res.json(result);
+} catch (err) {
+res.status(500).json({ error: err.message });
+}
+});
+
 module.exports = router;

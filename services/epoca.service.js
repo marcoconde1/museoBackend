@@ -33,8 +33,34 @@ async function deleteEpoca(id) {
   });
 }
 
+// Obtener época por ID
+async function getEpocaById(id) {
+return new Promise((resolve, reject) => {
+connection.query('SELECT * FROM EPOCA WHERE id = ?', [id], (err, results) => {
+if (err) return reject(err);
+if (results.length === 0) return resolve(null);
+  const row = results[0];
+  resolve(new Epoca(row.id, row.nombre_epoca, row.ano_inicio, row.ano_fin));
+});
+});
+}
+
+// Actualizar época por ID
+async function updateEpoca(id, data) {
+return new Promise((resolve, reject) => {
+const { nombre_epoca, ano_inicio, ano_fin } = data;
+const query = 'UPDATE EPOCA SET nombre_epoca = ?, ano_inicio = ?, ano_fin = ? WHERE id = ?';
+connection.query(query, [nombre_epoca, ano_inicio, ano_fin, id], (err, result) => {
+if (err) return reject(err);
+resolve({ message: 'Época con ID ${id} actualizada.'});
+});
+});
+}
+
 module.exports = {
   getAllEpocas,
   createEpoca,
-  deleteEpoca
+  deleteEpoca,
+  getEpocaById,
+updateEpoca
 };

@@ -31,7 +31,7 @@ app.use('/api', imagenRoutes);
 app.use('/api', videoRoutes);
 app.use('/api', objetoRoutes);
 app.use('/api', usuarioRoutes);
-app.use('/', favoritoRoutes);
+app.use('/api', favoritoRoutes);
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;

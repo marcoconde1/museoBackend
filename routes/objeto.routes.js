@@ -22,6 +22,7 @@ router.post('/objetos', async (req, res) => {
   }
 });
 
+
 // Eliminar objeto por ID
 router.delete('/objetos/:id', async (req, res) => {
   try {

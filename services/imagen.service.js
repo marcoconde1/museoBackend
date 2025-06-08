@@ -61,10 +61,22 @@ async function updateImagenRuta(id, nuevaRuta) {
   });
 }
 
+async function deleteImagenById(imagenId) {
+  return new Promise((resolve, reject) => {
+    const query = 'DELETE FROM IMAGEN WHERE id = ?';
+    connection.query(query, [imagenId], (err, result) => {
+      if (err) return reject(err);
+      resolve({ message: `Imagen con ID ${imagenId} eliminado.` });
+    });
+  });
+}
+
+
 module.exports = {
   getAllImagenes,
   createImagen,
   deleteImagen,
   getImagenesByObjetoId,
-  updateImagenRuta
+  updateImagenRuta,
+  deleteImagenById
 };

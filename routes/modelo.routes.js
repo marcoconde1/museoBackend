@@ -55,7 +55,7 @@ router.get('/modelos/:id', async (req, res) => {
     }
   });
 
-  router.put('/modelos/:objeto_id', async (req, res) => {
+router.put('/modelos/:objeto_id', async (req, res) => {
   try {
     const { objeto_id } = req.params;
     const { ruta_modelo, ruta_fondo } = req.body;

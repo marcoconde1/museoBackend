@@ -56,4 +56,14 @@ router.put('/imagenes/:id', async (req, res) => {
   }
 });
 
+router.delete('/imagenes/id/:id', async (req, res) => {
+  try {
+    const imagenId = req.params.id;
+    const resultado = await imagenService.deleteImagenById(imagenId);
+    res.json(resultado);
+  } catch (err) {
+    res.status(500).json({ message: 'Error al eliminar imagen por su id', error: err.message });
+  }
+});
+
   module.exports = router;

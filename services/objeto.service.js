@@ -17,28 +17,30 @@ async function getAllObjetos() {
 
 async function createObjeto(data) {
   const {
-    id, nombre, descripcion, fecha_creacion, valor_historico, nro_visitas,
+    nombre, descripcion, fecha_creacion, valor_historico, nro_visitas,
     ruta_preview, epoca_id, ubicacion_actual_id, estado_conservacion_id,
     procedencia_id, categoria_id, autor_id
   } = data;
 
   return new Promise((resolve, reject) => {
     const query = `INSERT INTO OBJETO
-      (id, nombre, descripcion, fecha_creacion, valor_historico, nro_visitas, ruta_preview,
+      (nombre, descripcion, fecha_creacion, valor_historico, nro_visitas, ruta_preview,
       EPOCA_id, UBICACION_ACTUAL_id, ESTADO_CONSERVACION_id, PROCEDENCIA_id, CATEGORIA_id, AUTOR_id)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const values = [
-      id, nombre, descripcion, fecha_creacion, valor_historico, nro_visitas, ruta_preview,
+      nombre, descripcion, fecha_creacion, valor_historico, nro_visitas, ruta_preview,
       epoca_id, ubicacion_actual_id, estado_conservacion_id, procedencia_id, categoria_id, autor_id
     ];
 
     connection.query(query, values, (err, result) => {
       if (err) return reject(err);
-      resolve({ message: 'Objeto creado correctamente' });
+      // Aquí sí puedes devolver el ID generado automáticamente
+      resolve({ id: result.insertId });
     });
   });
 }
+
 
 async function deleteObjeto(id) {
   return new Promise((resolve, reject) => {
@@ -56,7 +58,7 @@ async function getObjetoById(id) {
         if (err) return reject(err);
   
         if (results.length === 0) {
-          resolve(null); // No encontrado
+          resolve(null); 
         } else {
           const row = results[0];
           resolve(new Objeto(
@@ -71,59 +73,61 @@ async function getObjetoById(id) {
   }
   
 async function updateObjeto(id, data) {
-return new Promise((resolve, reject) => {
-const {
-nombre,
-descripcion,
-fecha_creacion,
-valor_historico,
-nro_visitas,
-ruta_preview,
-epoca_id,
-ubicacion_actual_id,
-estado_conservacion_id,
-procedencia_id,
-categoria_id,
-autor_id
-} = data;
-const query = `
-  UPDATE OBJETO SET
-    nombre = ?,
-    descripcion = ?,
-    fecha_creacion = ?,
-    valor_historico = ?,
-    nro_visitas = ?,
-    ruta_preview = ?,
-    EPOCA_id = ?,
-    UBICACION_ACTUAL_id = ?,
-    ESTADO_CONSERVACION_id = ?,
-    REGION_id = ?,
-    CATEGORIA_id = ?,
-    AUTOR_id = ?
-  WHERE id = ?`;
+  return new Promise((resolve, reject) => {
+    const {
+      nombre,
+      descripcion,
+      fecha_creacion,
+      valor_historico,
+      nro_visitas,
+      ruta_preview,
+      epoca_id,
+      ubicacion_actual_id,
+      estado_conservacion_id,
+      procedencia_id,
+      categoria_id,
+      autor_id
+    } = data;
 
-const values = [
-  nombre,
-  descripcion,
-  fecha_creacion,
-  valor_historico,
-  nro_visitas,
-  ruta_preview,
-  epoca_id,
-  ubicacion_actual_id,
-  estado_conservacion_id,
-  procedencia_id,
-  categoria_id,
-  autor_id,
-  id
-];
+    const query = `
+      UPDATE OBJETO SET
+        nombre = ?,
+        descripcion = ?,
+        fecha_creacion = ?,
+        valor_historico = ?,
+        nro_visitas = ?,
+        ruta_preview = ?,
+        EPOCA_id = ?,
+        UBICACION_ACTUAL_id = ?,
+        ESTADO_CONSERVACION_id = ?,
+        PROCEDENCIA_id = ?,      
+        CATEGORIA_id = ?,
+        AUTOR_id = ?
+      WHERE id = ?`;
 
-connection.query(query, values, (err, result) => {
-  if (err) return reject(err);
-  resolve({ message: `Objeto con id ${id} actualizado.` });
-});
-});
+    const values = [
+      nombre,
+      descripcion,
+      fecha_creacion,
+      valor_historico,
+      nro_visitas,
+      ruta_preview,
+      epoca_id,
+      ubicacion_actual_id,
+      estado_conservacion_id,
+      procedencia_id,
+      categoria_id,
+      autor_id,
+      id
+    ];
+
+    connection.query(query, values, (err, result) => {
+      if (err) return reject(err);
+      resolve({ message: `Objeto con id ${id} actualizado.` });
+    });
+  });
 }
+
 
 
 module.exports = {

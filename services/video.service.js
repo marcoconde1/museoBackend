@@ -12,17 +12,18 @@ async function getAllVideos() {
 
 async function createVideo(data) {
   return new Promise((resolve, reject) => {
-    const { ruta_video, objeto_id, id } = data;
+    const { ruta_video, objeto_id } = data;
     connection.query(
-      'INSERT INTO VIDEO (ruta_video, OBJETO_id) VALUES (?, ?, ?)',
-      [ruta_video, objeto_id, id],
+      'INSERT INTO VIDEO (ruta_video, OBJETO_id) VALUES (?, ?)',
+      [ruta_video, objeto_id],
       (err, result) => {
         if (err) return reject(err);
-        resolve({ ruta_video, objeto_id,id });
+        resolve({ ruta_video, objeto_id });
       }
     );
   });
 }
+
 
 async function deleteVideo(objeto_id) {
   return new Promise((resolve, reject) => {
@@ -56,6 +57,16 @@ async function updateVideoRuta(id, nuevaRuta) {
   });
 }
 
+async function deleteVideoById(videoId) {
+  return new Promise((resolve, reject) => {
+    const query = 'DELETE FROM VIDEO WHERE id = ?';
+    connection.query(query, [videoId], (err, result) => {
+      if (err) return reject(err);
+      resolve({ message: `Video con ID ${videoId} eliminado.` });
+    });
+  });
+}
+
 
 module.exports = {
   getAllVideos,
@@ -63,4 +74,5 @@ module.exports = {
   deleteVideo,
   getVideosByObjetoId,
   updateVideoRuta,
+  deleteVideoById
 };

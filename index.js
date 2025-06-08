@@ -13,6 +13,8 @@ const objetoRoutes = require('./routes/objeto.routes');
 const usuarioRoutes = require('./routes/usuario.routes');
 const favoritoRoutes = require('./routes/favorito.routes');
 
+const cors = require('cors');
+app.use(cors());
 
 require('dotenv').config();
 

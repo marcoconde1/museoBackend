@@ -76,10 +76,33 @@ async function updateUsuario(id, data) {
   });
 }
 
+async function obtenerUsuarioPorCredenciales(identificador, contrasena) {
+return new Promise((resolve, reject) => {
+const query = 'SELECT * FROM USUARIO WHERE (usuario = ? OR correo_electronico = ?) AND contrasena = ? ';
+connection.query(query, [identificador, identificador, contrasena], (err, results) => {
+if (err) return reject(err);
+if (results.length === 0) return resolve(null);
+const row = results[0];
+const usuario = new Usuario(
+row.id,
+row.nombre,
+row.apellido,
+row.usuario,
+row.contrasena,
+row.correo_electronico,
+row.admin
+);
+resolve(usuario);
+});
+});
+}
+
+
 module.exports = {
   getAllUsuarios,
   getUsuarioById,
   createUsuario,
   deleteUsuario,
-  updateUsuario
+  updateUsuario,
+  obtenerUsuarioPorCredenciales
 };

@@ -46,7 +46,7 @@ router.get('/videos/:objeto_id', async (req, res) => {
     }
   });
 
-  router.put('/videos/:id/ruta', async (req, res) => {
+router.put('/videos/:id', async (req, res) => {
   try {
     const { ruta_video } = req.body;
     if (!ruta_video) return res.status(400).json({ error: 'Falta ruta_video en el cuerpo' });
@@ -57,5 +57,17 @@ router.get('/videos/:objeto_id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+router.delete('/videos/id/:id', async (req, res) => {
+  try {
+    const videoId = req.params.id;
+    const resultado = await videoService.deleteVideoById(videoId);
+    res.json(resultado);
+  } catch (err) {
+    res.status(500).json({ message: 'Error al eliminar video por su id', error: err.message });
+  }
+});
+
+
 
 module.exports = router;

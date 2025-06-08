@@ -55,5 +55,20 @@ router.put('/usuarios/:id', async (req, res) => {
   }
 });
 
+router.post('/usuarios/login', async (req, res) => {
+try {
+const { identificador, contrasena } = req.body;
+if (!identificador || !contrasena) {
+return res.status(400).json({ error: 'Se requieren identificador y contraseña' });
+}
+const usuario = await usuarioService.obtenerUsuarioPorCredenciales(identificador, contrasena);
+if (!usuario) {
+  return res.status(401).json({ error: 'Credenciales inválidas' });
+}
+res.json(usuario);
+} catch (err) {
+res.status(500).json({ error: err.message });
+}
+});
 
 module.exports = router;
